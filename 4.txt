@@ -1,0 +1,29 @@
+lowerBoundQ[R_?partialorderQ, S_List, l_] := Module[{s}, Catch[Do[If[!MemberQ[R, {l, s}], Throw[False];
+     Break[]], {s, S}];
+   Throw[True]]]
+lowerBoundQ[div10, {2, 3, 6, 7}, 2]
+lowerBoundQ[div10, {1, 2, 5, 8, 9, 11}, 5]
+lowerBounds[R_?partialorderQ, S_List] := Module[{domR}, domR = findDomain[R];
+  Select[domR, lowerBoundQ[R, S, #] &]]
+lowerBounds[div10, {2, 4, 6}]
+greatestLowerBound[R_?partialorderQ, S_List] := Module[{U, M}, U = lowerBounds[R, S];
+  M = maximalElts[R, U];
+  If[Length[M] != 1, "Does not exists", M[[1]]]]
+greatestLowerBound[div10, {2, 4, 6}]
+upperBoundQ[R_?partialorderQ, S_List, u_] := Module[{s}, Catch[Do[If[!MemberQ[R, {s, u}], Throw[False];
+     Break[]], {s, S}];
+   Throw[True]]]
+div6 = dividesRelation[6]
+upperBoundQ[div6, {1, 2, 3}, 6]
+upperBoundQ[div6, {1, 2, 3, 4}, 6]
+upperBounds[R_?partialorderQ, S_List] := Module[{domR}, domR = findDomain[R];
+  Select[domR, upperBoundQ[R, S, #] &]]
+upperBounds[div6, {4, 5}]
+upperBounds[div6, {1, 2}]
+leastUpperBound[R_?partialorderQ, S_List] := Module[{U, M}, U = upperBounds[R, S];
+  M = minimalElts[R, U];
+  If[Length[M] != 1, "Does not exists", M[[1]]]]
+leastUpperBound[div6, {1, 2}]
+leastUpperBound[div6, {1, 2, 3}]
+leastUpperBound[div6, {4, 5}]
+leastUpperBound[a2, {{}, {1, 2}, {1, 3}}]
