@@ -5,26 +5,29 @@ relationQ[___] := False
 dividesRelation[n_Integer] := Select[Tuples[Range[n], 2], Divisible[#[[2]], #[[1]]] &]
 div10 = dividesRelation[10]
 Flatten[div10, 1]
+
 findDomain[R_?relationQ] := Union[Flatten[R, 1]]
 findDomain[div10]
-?Catch
-?Throw
+
 Catch[{a; b; 1; Throw[2]; Throw[3]}]
-?Module
+
 reflexiveQ[R_?relationQ] := Module[{a, domain}, domain = findDomain[R];
   Catch[Do[If[!MemberQ[R, {a, a}], Throw[False]], {a, domain}];
    Throw[True]]]
 reflexiveQ[div10]
-?Do
+
 symmetryQ[R_?relationQ] := Module[{u}, Catch[Do[If[!MemberQ[R, Reverse[u]], Throw[False]], {u, R}];
    Throw[True]]]
 symmetryQ[div10]
+
 antisymmetryQ[R_?relationQ] := Module[{u}, Catch[Do[If[MemberQ[R, Reverse[u]] && u[[1]] != u[[2]], Throw[False]], {u, R}];
    Throw[True]]]
 antisymmetryQ[div10]
+
 transitiveQ[R_?relationQ] := Module[{a, b, c, domain}, domain = findDomain[R];
   Catch[Do[If[MemberQ[R, {a, b}] && MemberQ[R, {b, c}] && !MemberQ[R, {a, c}], Throw[False]], {a, domain}, {b, domain}, {c, domain}];
    Throw[True]]]
 transitiveQ[div10]
+
 partialorderQ[R_?relationQ] := reflexiveQ[R] && antisymmetryQ[R] && transitiveQ[R]
 partialorderQ[div10]
