@@ -1,7 +1,10 @@
 Clear[a]
 BooleanMinimize[(a && b) || (!a && b && !c)]
+
 BooleanMinimize[(a && b) || (!a && b && !c), "CNF"]
+
 Simplify[(a && b) || (!a && b && !c)]
+
 BooleanMinimize[((x || y) && (x || z)) || (x && y && z)]
 BooleanMinimize[(x && y && !z) || (x && !y && z) || (!x && y && z) || (!x && !y && z) || (!x && !z)]
 BooleanMinimize[(!x && y) || (!x && !y && z) || (x && !y && !z) || (x && !y && z)]
