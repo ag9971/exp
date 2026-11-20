@@ -1,0 +1,20 @@
+?===
+1 === 1
+x = 2
+?==
+x - 1 == 3
+x - 1 == 1
+x - 1 === 1
+hasLUBs[R_?partialorderQ] := Module[{domR, a, b}, domR = findDomain[R];
+  Catch[Do[If[leastUpperBound[R, {a, b}] === "Does not exists", Throw[False]], {a, domR}, {b, domR}];
+   Throw[True]]]
+hasGLBs[R_?partialorderQ] := Module[{domR, a, b}, domR = findDomain[R];
+  Catch[Do[If[greatestLowerBound[R, {a, b}] === "Does not exists", Throw[False]], {a, domR}, {b, domR}];
+   Throw[True]]]
+hasGLB1s[R_?partialorderQ] := hasLUBs[inverseRelation[R]]
+latticeQ[R_?partialorderQ] := hasLUBs[R] && hasGLBs[R]
+latticeQ[dividesRelation[4]]
+d20 = dividesRelation[20]
+latticeQ[d20]
+latticeQ[a2]
+latticeQ[dividesRelation[6]]
