@@ -1,0 +1,43 @@
+IntegerQ[12]
+ArrayQ[1]
+pairQ[{_, _}] := True
+pairQ[1]
+pairQ[{1, 2}]
+pairQ[___] := False
+pairQ[2]
+pairQ[]
+relationQ[{___?pairQ}] := True
+relationQ[___] := False
+relationQ[{2, 3, 4}]
+relationQ[{{2, 3}, {1, 2}}]
+Tuples[{1, 2, 6, 5}, 2]
+Tuples[{1, 2, 6, 5}, 3]
+dividesRelation[A : {___Integer}] := Select[Tuples[A, 2], Divisible[#[[2]], #[[1]]] &]
+dividesRelation[{1, 2, 3}]
+A = {1, 2, 3, 4, 9, 12}
+dividesRelation[A]
+dividesRelation[Range[50]]
+dividesRelation1[n_Integer] := Select[Tuples[Range[n], 2], Divisible[#[[2]], #[[1]]] &]
+div10 = dividesRelation1[10]
+inverseRelation[R_?relationQ] := Reverse[R, 2]
+inverseRelation[div10]
+inverseRelation1[R_?relationQ] := Reverse[R, 1]
+inverseRelation1[div10]
+sumRelation[n_Integer] := Select[Tuples[Range[n], 2], #[[2]] + #[[1]] == 10 &]
+sumRelation[20]
+Subsets[{1, 2, 3}]
+setincRelation[p_] := Select[Tuples[Subsets[p], 2], Intersection[#[[1]], #[[2]]] == #[[1]] &]
+setincRelation[{1, 2, 3, 4}]
+setincRelation[Range[3]]
+lessthanRelation[p_] := Select[Tuples[Subsets[p], 2], #[[1]] < #[[2]] &]
+eqRelation[p_] := Select[Tuples[Subsets[p], 2], #[[1]] == #[[2]] &]
+noteqRelation[p_] := Select[Tuples[Subsets[p], 2], #[[1]] != #[[2]] &]
+zRelation[p_] := Select[Tuples[Subsets[p], 2], #[[1]] == #[[2]] + 1 || #[[1]] == #[[2]] - 1 &]
+a = {1, 2, 3}
+lessthanRelation[a]
+eqRelation[a]
+noteqRelation[a]
+zRelation[a]
+subset1 = {{1, 2}, {3, 4}, {1, 4}, {2, 4}};
+Flatten[subset1]
+Flatten[{subset1, 0}]
