@@ -1,0 +1,40 @@
+True || False
+True || True
+False || True
+False || False
+True && True
+True && False
+False && True
+False && False
+!True
+!False
+!True && False
+!True || False
+True && !True
+True && False
+True || False
+!True
+f[x_, y_, z_] := (x && y) || (y && z) || (z && x); f[p, q, r]
+f[True, False, True]
+f[True, q, r]
+f[True, q, r] // Simplify
+g[x_, y_] := !((!(x || y) && x) || !!!y) || (x && y) || (x && !y)
+g[False, False]
+g[False, True]
+g[True, False]
+g[True, True]
+h[x_, y_, z_] := (x && (!(y || z))) || ((x && y) || !z) && x;
+h[0, 0, 0] // Simplify
+h[1, 0, 0] // Simplify
+h[0, 1, 0] // Simplify
+h[0, 0, 1] // Simplify
+h[1, 1, 0] // Simplify
+h[0, 1, 1] // Simplify
+h[1, 0, 1] // Simplify
+h[1, 1, 1] // Simplify
+BooleanTable[{p, q, r, f[p, q, r]}, {p, q, r}]
+BooleanTable[{p, q, r, f[p, q, r]}, {p, q, r}] // TableForm
+Boole[BooleanTable[{p, q, r, f[p, q, r]}, {p, q, r}]] // TableForm
+TableForm[Boole[BooleanTable[{p, q, r, f[p, q, r]}, {p, q, r}]], TableHeadings -> {None, {p, q, r, f}}]
+TableForm[Boole[BooleanTable[{p, q, g[p, q]}, {p, q}]], TableHeadings -> {None, {p, q, g}}]
+TableForm[Boole[BooleanTable[{p, q, r, h[p, q, r]}, {p, q, r}]], TableHeadings -> {None, {p, q, r, h}}]
