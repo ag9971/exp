@@ -3,34 +3,44 @@ coversQ[R_?partialorderQ, {x_, y_}] := Module[{z, checkset}, checkset = Compleme
    If[!MemberQ[R, {x, y}], Throw[False]];
    Do[If[MemberQ[R, {x, z}] && MemberQ[R, {z, y}], Throw[False]], {z, checkset}];
    Throw[True]]]
+
 coveringRelation[R_?partialorderQ] := Select[R, coversQ[R, #] &]
 coveringRelation[div10]
+
 setinclRelation[A_] := Select[Tuples[Subsets[A], 2], Intersection[#[[1]], #[[2]]] == #[[1]] &]
 a1 = setinclRelation[{1, 2}]
 a2 = setinclRelation[{1, 2, 3}]
+
 coveringRelation[a1]
 coveringRelation[a2]
 findDomain[a1]
+
 finddomain1[R_?relationQ] := Union[First /@ R, Last /@ R]
 finddomain1[a1]
+
 hassDiagram[R_?partialorderQ] := Module[{edges, u}, u = coveringRelation[R];
   edges = Table[u[[j, 2]] -> u[[j, 1]], {j, 1, Length[u]}];
   LayeredGraphPlot[edges, VertexLabeling -> True, DirectedEdges -> False]]
 hassDiagram[div10]
+
 hassDiagram[a1]
 hassDiagram[a2]
+
 minimalElts[R_?partialorderQ, S_List] := Module[{M, s, t}, M = S;
   Do[Do[If[MemberQ[R, {t, s}], M = Complement[M, {s}];
      Break[]], {t, Complement[S, {s}]}], {s, S}];
   M]
+
 minimalElts[div10, Range[10]]
 minimalElts[a1, Subsets[{1, 2}]]
 minimalElts[div10, Range[3, 10]]
 Range[3, 10]
 minimalElts[a2, Subsets[{1, 2, 3}]]
+
 inverseRelation[R_?relationQ] := Reverse[R, 2]
 maximalElts[R_?partialorderQ, S_List] := minimalElts[inverseRelation[R], S]
 maximalElts[div10, Range[10]]
+
 maxElts[R_?partialorderQ, S_List] := Module[{M, s, t}, M = S;
   Do[Do[If[MemberQ[R, {s, t}], M = Complement[M, {s}];
      Break[]], {t, Complement[S, {s}]}], {s, S}];
